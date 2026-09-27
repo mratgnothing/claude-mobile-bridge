@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101114" />
+  <title>Claude Mobile Bridge</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-head">
+        <div>
+          <div class="eyebrow">DESKTOP BRIDGE</div>
+          <div class="brand">Claude Code</div>
+        </div>
+        <button id="closeSidebar" class="icon-button mobile-only" aria-label="关闭">×</button>
+      </div>
+      <button id="newChatBtn" class="new-chat">＋ 新对话</button>
+      <div class="sidebar-section-label">最近对话</div>
+      <div id="sessionList" class="session-list"></div>
+      <div class="sidebar-foot">
+        <span id="bridgeStatusDot" class="status-dot"></span>
+        <span id="bridgeStatusText">连接中</span>
+      </div>
+    </aside>
+
+    <main class="main-pane">
+      <header class="topbar">
+        <button id="openSidebar" class="icon-button mobile-only" aria-label="会话列表">☰</button>
+        <div class="session-heading">
+          <div id="sessionTitle" class="session-title">选择一个对话</div>
+          <div id="sessionMeta" class="session-meta"></div>
+        </div>
+        <div id="desktopBadge" class="badge hidden">桌面占用 · 只读</div>
+      </header>
+
+      <section class="controls" id="controls">
+        <label>
+          <span>API</span>
+          <select id="apiSelect"></select>
+        </label>
+        <label>
+          <span>模型</span>
+          <select id="modelSelect"></select>
+        </label>
+        <label>
+          <span>思考强度</span>
+          <select id="effortSelect"></select>
+        </label>
+      </section>
+
+      <div id="contextBar" class="context-bar">正在核对 Claude Code 上下文…</div>
+
+      <div id="readonlyBanner" class="readonly-banner hidden">
+        这个会话目前正在桌面 Claude Code 中运行。手机端可以实时查看，但不会向它注入输入；桌面结束后即可从手机继续。
+      </div>
+
+      <section id="messages" class="messages">
+        <div class="empty-state">
+          <h2>Claude Mobile Bridge</h2>
+          <p>选择历史会话，或创建一个新的 Claude Code 对话。</p>
+        </div>
+      </section>
+
+      <section class="composer-wrap">
+        <div id="liveTools" class="live-tools hidden"></div>
+        <div class="composer">
+          <textarea id="composer" rows="1" placeholder="给 Claude Code 发消息…"></textarea>
+          <button id="stopBtn" class="stop-button hidden">停止</button>
+          <button id="sendBtn" class="send-button" aria-label="发送">↑</button>
+        </div>
+        <div class="composer-hint">Claude Code 原生 /compact、/config、/context、/model、/effort、/mcp 等会原样执行；Bridge 专用指令以 /bridge- 开头。</div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="newChatDialog" class="dialog">
+    <form method="dialog" id="newChatForm">
+      <div class="dialog-title">新建 Claude Code 对话</div>
+      <label>
+        <span>工作目录</span>
+        <input id="newCwd" type="text" value="D:\\GitHub" list="workspaceOptions" autocomplete="off" />
+        <datalist id="workspaceOptions"></datalist>
+      </label>
+      <label>
+        <span>标题（可选）</span>
+        <input id="newTitle" type="text" placeholder="例如：WAVE-cloud 调试" autocomplete="off" />
+      </label>
+      <div class="dialog-actions">
+        <button value="cancel" class="secondary">取消</button>
+        <button id="createChatBtn" value="default" class="primary">创建</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
